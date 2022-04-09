@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import css from '../src/styles/styles'
 
 export default function End({ navigation, route }) {
     const [phrase, setPhrase] = useState('')
@@ -28,52 +29,15 @@ export default function End({ navigation, route }) {
         }
     },[])
     return (
-        <LinearGradient style={styles.container} start={{ x: 0, y: 1 }} end={{ x: 0, y: 0 }} colors={["#00c400", "#00FF00"]}>
-            <View style={{ position: 'absolute', top: "20%", alignSelf: 'center' }}>
-                <Text style={[styles.text, { marginTop: 0 }]}>Você acertou:</Text>
-                <Text style={styles.text}>{successes}/5</Text>
-                <Text style={styles.phrase}>{phrase}</Text>
+        <LinearGradient style={css.container} start={{ x: 0, y: 1 }} end={{ x: 0, y: 0 }} colors={["#00c400", "#00FF00"]}>
+            <View style={css.viewEnd}>
+                <Text style={[css.text, { marginTop: 0 }]}>Você acertou:</Text>
+                <Text style={css.text}>{successes}/5</Text>
+                <Text style={css.phrase}>{phrase}</Text>
             </View>
-            <TouchableOpacity style={styles.buttonBack} onPress={() => navigation.replace('Home')}>
-                <Text style={styles.textButton}>Voltar ao menu</Text>
+            <TouchableOpacity style={css.buttonBackEnd} onPress={() => navigation.replace('Home')}>
+                <Text style={css.textButtonEnd}>Voltar ao menu</Text>
             </TouchableOpacity>
         </LinearGradient>
     )
 }
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    text: {
-        color: "#FFF",
-        fontSize: 40,
-        alignSelf: 'center',
-        fontFamily: 'BIZUDPMincho-Regular',
-        marginTop: 30
-    },
-    buttonBack: {
-        backgroundColor: "#FFF",
-        width: 250,
-        height: 90,
-        borderRadius: 10,
-        padding: 20,
-        position: "absolute",
-        bottom: "10%",
-        alignSelf: "center",
-        justifyContent: 'center'
-    },
-    textButton: {
-        textAlign: "center",
-        color: "#00c400",
-        fontSize: 20,
-        fontWeight:'bold'
-    },
-    phrase: {
-        color: "#FFF",
-        fontSize: 28,
-        textAlign: 'center',
-        fontFamily: 'BIZUDPMincho-Regular',
-        marginTop: 35,
-        margin: 10,
-    }
-})

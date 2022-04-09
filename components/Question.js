@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, ImageBackground, Image } from 'react-native';
+import { Text, View, TouchableOpacity, ImageBackground, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
+import css from '../src/styles/styles'
 
 export default function Question({ navigation }) {
     const [successes, setSucesses] = useState(0);
@@ -13,24 +14,24 @@ export default function Question({ navigation }) {
 
     const back = [
         {
-            question: "Pergunta 1",
-            alternatives: [{ alternative: "Oi", isTrue: true }, { alternative: "alternative2" }, { alternative: "alternative3" }, { alternative: "alternative4" }],
+            question: "Das opções abaixo, a que não representa um impacto ambiental é:",
+            alternatives: [{ alternative: "Chuva ácida" }, { alternative: "Assoreamento dos rios" }, { alternative: "Desertificação" }, { alternative: "Mobilidade urbana", isCorrect: true }],
         },
         {
-            question: "Pergunta 2",
-            alternatives: [{ alternative: "Alternative1", isTrue: true }, { alternative: "alternative2" }, { alternative: "alternative3" }, { alternative: "alternative4" }],
+            question: "As mudanças climáticas são um dos principais problemas ambientais do mundo que tem afetado grande parte da população de pessoas, de animais e de plantas.Esse problema traz diversas consequências negativas para o meio ambiente, da qual se destaca:",
+            alternatives: [{ alternative: "Aumento da temperatura do globo terrestre", isCorrect: true }, { alternative: "Diminuição dos níveis dos oceanos" }, { alternative: "Aumento da urbanização" }, { alternative: "Crescimento da industrialização" }],
         },
         {
-            question: "Pergunta 3",
-            alternatives: [{ alternative: "Alternative1", isTrue: true }, { alternative: "alternative2" }, { alternative: "alternative3" }, { alternative: "alternative4" }],
+            question: "O _________ é um dos principais problemas ambientais no Brasil que acontece desde a chegada dos portugueses em 1500. Das alternativas abaixo, a que preenche corretamente a lacuna é:",
+            alternatives: [{ alternative: " Assoreamento" }, { alternative: "Efeito estufa" }, { alternative: "Desmatamento", isCorrect: true }, { alternative: "Empobrecimento do solo" }],
         },
         {
-            question: "Pergunta 4",
-            alternatives: [{ alternative: "Alternative1", isTrue: true }, { alternative: "alternative2" }, { alternative: "alternative3" }, { alternative: "alternative4" }],
+            question: "Em 19 de agosto de 2019, moradores de São Paulo ficaram assustados com o final da tarde que escureceu grande parte da cidade. Esse fenômeno foi resultado das queimadas que aconteceram na região amazônica. Sobre as queimadas, é incorreto afirmar:",
+            alternatives: [{ alternative: "Uma das consequências das queimadas é a mudança da temperatura e umidade do solo." }, { alternative: "As queimadas somente acontecem de maneira intencional, ou seja, por pessoas que provocam os incêndios.", isCorrect: true }, { alternative: "As queimadas intensificam o efeito estufa e o aquecimento global." }, { alternative: "Diversas práticas agrícolas estão relacionadas com as causas das queimadas." }],
         },
         {
-            question: "Pergunta 5",
-            alternatives: [{ alternative: "Ola", isTrue: true }, { alternative: "alternative2" }, { alternative: "alternative3" }, { alternative: "alternative4" }],
+            question: "As ilhas de calor representam um dos problemas ambientais urbanos. Esse fenômeno climático acontece devido:",
+            alternatives: [{ alternative: "Ao aumento das queimadas nas zonas rurais", isCorrect: true }, { alternative: "A diminuição da densidade demográfica dos centros urbanos" }, { alternative: "Ao aumento da inversão térmica nas cidades" }, { alternative: "A elevação das temperaturas em algumas zonas urbanas", isCorrect: true }],
         }
 
     ]
@@ -41,10 +42,10 @@ export default function Question({ navigation }) {
 
         if (value) {
             setSucesses(successes + 1)
-            setColorComp("#00FF00")
+            setColorComp("#4EB500")
         }
         if (value == undefined) {
-            setColorComp("#FF0000")
+            setColorComp("#B50000")
         }
         setTimeout(() => {
             if (numberQuestion !== 5) {
@@ -69,102 +70,42 @@ export default function Question({ navigation }) {
         }
     }, [qtdQuestion])
 
-
     return (
-        <ImageBackground style={{ flex: 1 }} source={require('../view/src/assents/background_question.jpg')}>
-            <View style={styles.container}>
-                <View style={styles.menuBar}>
-                    <LinearGradient style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between' }} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={["#00c400", "#00FF00", "#F6FF00", "#00FF00", "#00c400"]}>
-                        <TouchableOpacity disabled={disable} onPress={() => navigation.goBack()}>
-                            <Icon name="arrow-left-thick" size={30} color="#FFF" />
-                        </TouchableOpacity>
-                        <View style={{ flexDirection: 'row', margin: 3, marginRight: 5 }}>
-                            <Icon name="circle" size={27} color={colorComp !== "#00FF00" && colorComp !== "#FF0000" && colorComp !== "#FFF" ? "#FFF" : numberQuestion == 1 && colorComp} />
-                            <Icon name="circle" size={27} color={colorComp !== "#00FF00" && colorComp !== "#FF0000" && colorComp !== "#FFF" ? "#FFF" : numberQuestion == 2 && colorComp} />
-                            <Icon name="circle" size={27} color={colorComp !== "#00FF00" && colorComp !== "#FF0000" && colorComp !== "#FFF" ? "#FFF" : numberQuestion == 3 && colorComp} />
-                            <Icon name="circle" size={27} color={colorComp !== "#00FF00" && colorComp !== "#FF0000" && colorComp !== "#FFF" ? "#FFF" : numberQuestion == 4 && colorComp} />
-                            <Icon name="circle" size={27} color={colorComp !== "#00FF00" && colorComp !== "#FF0000" && colorComp !== "#FFF" ? "#FFF" : numberQuestion == 5 && colorComp} />
-                        </View>
-                    </LinearGradient>
-                </View>
-                {back.splice(qtdQuestion, 1).map((value, index) => {
-                    return (
-                        <View style={{ flex: 1 }} key={index}>
-                            <Text style={styles.titleQuestion}>Questão {numberQuestion}</Text>
-                            <Image style={styles.image} source={require('../view/src/assents/image1.jpg')} />
-                            <Text style={styles.questionText}>{value.question}</Text>
-                            <View style={styles.viewAlternative}>
-                                {value.alternatives.map((values, index) => {
-                                    return (
-                                        <View key={index}>
-                                            <TouchableOpacity disabled={disable} style={[styles.buttonAlternative, stateAlternative === values.alternative && { backgroundColor: colorComp, borderColor: disable ? '#000' : "#FFF", borderWidth: 0.9 }]} activeOpacity={0.7} onPress={() => verifySucess(values.isTrue, values.alternative)}>
-                                                <Text style={styles.textAlternative}>{values.alternative}</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                    )
-                                })}
-                            </View>
-                        </View>
-                    )
-                })}
+        <ImageBackground imageStyle={{ resizeMode: "stretch" }} style={css.container} source={require('../src/assents/background_question.jpg')}>
+            <View style={css.menuBar}>
+                <LinearGradient style={css.gradientQuestion} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={["#00c400", "#00FF00", "#F6FF00", "#00FF00", "#00c400"]}>
+                    <TouchableOpacity disabled={disable} onPress={() => navigation.goBack()}>
+                        <Icon name="arrow-left-thick" size={35} color="#FFF" />
+                    </TouchableOpacity>
+                    <View style={css.viewIcon}>
+                        <Icon name="circle" size={33} color={colorComp !== "#4EB500" && colorComp !== "#B50000" && colorComp !== "#FFF" ? "#FFF" : numberQuestion == 1 && colorComp} />
+                        <Icon name="circle" size={33} color={colorComp !== "#4EB500" && colorComp !== "#B50000" && colorComp !== "#FFF" ? "#FFF" : numberQuestion == 2 && colorComp} />
+                        <Icon name="circle" size={33} color={colorComp !== "#4EB500" && colorComp !== "#B50000" && colorComp !== "#FFF" ? "#FFF" : numberQuestion == 3 && colorComp} />
+                        <Icon name="circle" size={33} color={colorComp !== "#4EB500" && colorComp !== "#B50000" && colorComp !== "#FFF" ? "#FFF" : numberQuestion == 4 && colorComp} />
+                        <Icon name="circle" size={33} color={colorComp !== "#4EB500" && colorComp !== "#B50000" && colorComp !== "#FFF" ? "#FFF" : numberQuestion == 5 && colorComp} />
+                    </View>
+                </LinearGradient>
             </View>
+            {back.splice(qtdQuestion, 1).map((value, index) => {
+                return (
+                    <View style={css.container} key={index}>
+                        <Text adjustsFontSizeToFit style={css.titleQuestion}>Questão {numberQuestion}</Text>
+                        <Image style={css.image} source={require('../src/assents/image1.jpg')} />
+                        <Text numberOfLines={6} adjustsFontSizeToFit style={css.questionText}>{value.question}</Text>
+                        <View style={css.viewAlternative}>
+                            {value.alternatives.map((values, index) => {
+                                return (
+                                    <View key={index}>
+                                        <TouchableOpacity disabled={disable} style={[css.buttonAlternative, stateAlternative === values.alternative && { backgroundColor: colorComp, borderColor: disable ? '#2A6000' : "#FFF", borderWidth: 1 }]} activeOpacity={0.7} onPress={() => verifySucess(values.isCorrect, values.alternative)}>
+                                            <Text numberOfLines={4} adjustsFontSizeToFit style={css.textAlternative}>{values.alternative}</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                )
+                            })}
+                        </View>
+                    </View>
+                )
+            })}
         </ImageBackground>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    },
-    titleQuestion: {
-        fontSize: 32,
-        textAlign: 'center',
-        marginTop: 15,
-        color: '#000',
-        fontFamily: 'VarelaRound-Regular'
-    },
-    questionText: {
-        fontSize: 20,
-        color: '#000',
-        textAlign: 'center',
-        width: "90%",
-        alignSelf: 'center',
-        fontFamily: 'VarelaRound-Regular'
-    },
-    image: {
-        width: "70%",
-        resizeMode: 'contain',
-        height: "35%",
-        alignSelf: 'center'
-    },
-    buttonAlternative: {
-        backgroundColor: '#FFF',
-        width: 180,
-        height: 110,
-        borderRadius: 10,
-        padding: 20,
-        margin: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    textAlternative: {
-        color: '#000',
-        fontSize: 18,
-        textAlign: 'center',
-        fontFamily: 'VarelaRound-Regular'
-    },
-    viewAlternative: {
-        flex: 1,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        position: 'absolute',
-        bottom: '5%',
-        justifyContent: 'center'
-    },
-    menuBar: {
-        flexDirection: 'row',
-    },
-    icon: {
-        color: '#FFF'
-    }
-})

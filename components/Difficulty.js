@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, Text, ImageBackground, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-var colors = "#00C400";
+import css from '../src/styles/styles';
+let colors = "#00C400";
+let diffi = "Fácil";
 export default function Difficulty({ navigation }) {
-    const [difficulty, setDifficulty] = useState("Fácil");
+    const [difficulty, setDifficulty] = useState(diffi);
     function levelDifficult(valor) {
         switch (valor) {
             case "Fácil":
@@ -17,67 +19,31 @@ export default function Difficulty({ navigation }) {
                 break;
         }
         setDifficulty(valor)
-        navigation.navigate("Home")
+        navigation.replace("Home")
+        diffi = valor
     }
     return (
-        <ImageBackground style={styles.containerModal} source={require('../view/src/assents/background_difficulty.jpg')}>
-            <View style={{ position: 'absolute', top: 30,alignItems:'center' }}>
-                <Text style={styles.titleModalDif}>DIFICULDADE ATUAL:</Text>
-                <Text style={[styles.infoDif, { color: colors }]}>{difficulty}</Text>
-            <Text style={styles.titleModal}>ESCOLHA:</Text>
-            <TouchableOpacity style={{width:"80%"}} activeOpacity={0.9} onPress={() => levelDifficult("Fácil")}>
-                <LinearGradient start={{ x: 0.8, y: 0 }} end={{ x: 0, y: 0 }} style={styles.gradientDif} colors={["#00C400","#00FF00"]}>
-                    <Text style={styles.textButtonDifficulty}>FÁCIL</Text>
+        <ImageBackground imageStyle={{resizeMode:"stretch"}} style={css.containerDifficulty} source={require('../src/assents/background_difficulty.jpg')}>
+            <View style={css.viewDifficulty}>
+                <Text style={css.titleModalDif}>DIFICULDADE ATUAL:</Text>
+                <Text style={[css.infoDif, { color: colors }]}>{difficulty}</Text>
+            <Text style={css.titleModal}>ESCOLHA:</Text>
+            <TouchableOpacity style={css.buttonDifficulty} activeOpacity={0.9} onPress={() => levelDifficult("Fácil")}>
+                <LinearGradient start={{ x: 0.8, y: 0 }} end={{ x: 0, y: 0 }} style={css.gradientDif} colors={["#00C400","#00FF00"]}>
+                    <Text style={css.textButton}>FÁCIL</Text>
                 </LinearGradient>
             </TouchableOpacity>
-            <TouchableOpacity style={{width:"80%"}} activeOpacity={0.9} onPress={() => levelDifficult("Médio")}>
-                <LinearGradient start={{ x: 0.8, y: 0 }} end={{ x: 0, y: 0 }} style={styles.gradientDif} colors={["#0045CF","#007BFF"]}>
-                    <Text style={styles.textButtonDifficulty}>MÉDIO</Text>
+            <TouchableOpacity style={css.buttonDifficulty} activeOpacity={0.9} onPress={() => levelDifficult("Médio")}>
+                <LinearGradient start={{ x: 0.8, y: 0 }} end={{ x: 0, y: 0 }} style={css.gradientDif} colors={["#0045CF","#007BFF"]}>
+                    <Text style={css.textButton}>MÉDIO</Text>
                 </LinearGradient>
             </TouchableOpacity>
-            <TouchableOpacity style={{width:"80%"}} activeOpacity={0.9} onPress={() => levelDifficult("Difícil")}>
-                <LinearGradient start={{ x: 0.8, y: 0 }} end={{ x: 0, y: 0 }} style={styles.gradientDif} colors={["#C20000","#FF0000"]}>
-                    <Text style={styles.textButtonDifficulty}>DIFÍCIL</Text>
+            <TouchableOpacity style={css.buttonDifficulty} activeOpacity={0.9} onPress={() => levelDifficult("Difícil")}>
+                <LinearGradient start={{ x: 0.8, y: 0 }} end={{ x: 0, y: 0 }} style={css.gradientDif} colors={["#C20000","#FF0000"]}>
+                    <Text style={css.textButton}>DIFÍCIL</Text>
                 </LinearGradient>
             </TouchableOpacity>
             </View>
         </ImageBackground>
     )
 }
-const styles = StyleSheet.create({
-    containerModal: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    titleModalDif: {
-        fontSize: 28,
-        textAlign: "center",
-        marginBottom: 30,
-        fontWeight:'bold',
-        color:"#95A5A6"
-    },
-    infoDif: {
-        fontSize: 40,
-        textAlign: "center",
-        fontWeight: "bold",
-    },
-    titleModal: {
-        fontSize: 28,
-        textAlign: "center",
-        marginTop:"20%",
-        marginBottom: 30,
-        color:"#95A5A6"
-    },
-    gradientDif: {
-        padding: 25,
-        borderRadius: 5,
-        margin: 10,
-    },
-    textButtonDifficulty: {
-        color: '#FFF',
-        textAlign: 'center',
-        fontWeight: 'bold',
-        fontSize: 20
-    }
-})
