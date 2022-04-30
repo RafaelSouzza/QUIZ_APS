@@ -138,8 +138,9 @@ export default StyleSheet.create({
     imageTip: {
         resizeMode: 'contain',
         height: '60%',
-        width: '100%',
-        marginTop: 30
+        width: '90%',
+        marginTop: 30,
+        alignSelf:'center'
     },
     titleTip: {
         fontSize: 24,
@@ -189,16 +190,18 @@ export default StyleSheet.create({
         fontSize: 22,
         color: '#000',
         textAlign: 'center',
-        width: "85%",
+        width: "90%",
         maxHeight: "40%",
         alignSelf: 'center',
         fontFamily: 'VarelaRound-Regular'
     },
     image: {
-        width: "70%",
-        resizeMode: "contain",
+        width: "80%",
+        resizeMode: "stretch",
         height: "30%",
         alignSelf: 'center',
+        marginTop:5,
+        marginBottom:5
     },
     buttonAlternative: {
         backgroundColor: '#FFF',
