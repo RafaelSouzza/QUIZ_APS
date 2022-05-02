@@ -5,8 +5,8 @@ import { DiffiContext } from '../context/DifficultyContext';
 import css from '../styles/styles';
 let colors = "#00C400";
 export default function Difficulty({ navigation }) {
-
     const {difficulty, setDifficulty} = useContext(DiffiContext);
+
     function levelDifficult(valor) {
         switch (valor) {
             case "Fácil":

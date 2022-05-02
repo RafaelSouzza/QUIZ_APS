@@ -8,6 +8,4 @@ export async function getQuestions() {
         timeout: 5000
     })
     return data
-
 }
-

@@ -6,8 +6,10 @@ import css from '../styles/styles'
 
 export default function End({ navigation, route }) {
     const [phrase, setPhrase] = useState('');
+    
     const { successes } = route.params;
     const {difficulty} = useContext(DiffiContext);
+
     useEffect(() => {
         switch (successes) {
             case 0:

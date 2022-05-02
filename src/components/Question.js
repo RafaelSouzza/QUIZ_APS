@@ -10,13 +10,14 @@ let questionNew = [];
 export default function Question({ navigation }) {
     const [successes, setSucesses] = useState(0);
     const [numberQuestion, setNumberQuestion] = useState(1);
-    const [qtdQuestion, setQtdQuestion] = useState(-5);
     const [disable, setDisable] = useState(false);
     const [stateAlternative, setStateAlternative] = useState();
     const [colorComp, setColorComp] = useState();
     const [reQuestions, setReQuestions] = useState([]);
     const [alternatives, setAlternatives] = useState([]);
     const [loanding, setLoanding] = useState(true);
+
+    const { difficulty } = useContext(DiffiContext);
 
     const images = [
         {
@@ -79,16 +80,15 @@ export default function Question({ navigation }) {
             id: 15,
             directory: require("../assents/imageQuestion/Question15.jpg")
         },
-    ]
+    ] // Array com todos os caminhos das imagens utilizadas na parte de questões do aplicativo
 
-    const { difficulty } = useContext(DiffiContext);
-    useEffect(() => {
+
+    useEffect(() => { // Faz a requisição na API
         async function getApi() {
             await getQuestions()
                 .then((response) => {
                     setReQuestions(response)
                     setLoanding(false)
-
                 })
                 .catch((error) => {
                     Alert.alert('Aviso', 'A conexão expirou, tente novamente!', [
@@ -103,14 +103,20 @@ export default function Question({ navigation }) {
         questionNew = []
     }, [])
 
-    useEffect(() => {
+    useEffect(() => { // Quando a variável reQuestions estiver com o contéudo da API, chamamos duas funções
         if (reQuestions.length !== 0) {
             randomQuestion()
             setAlter()
         }
     }, [reQuestions])
 
-    function setAlter() {
+    useEffect(() => { // Toda vez que o numberQuestion for alterado, será chamado a função
+        if (numberQuestion !== 1) {
+            setAlter()
+        }
+    }, [numberQuestion])
+
+    function setAlter() { // Função que embaralha as alternativas da pergunta e coloca dentro de uma variável
         function randomAlter() {
             filterQuestion().map((value) => {
                 let altern = [
@@ -133,7 +139,7 @@ export default function Question({ navigation }) {
         randomAlter()
     }
 
-    function verifySucess(correct, alternative) {
+    function verifySucess(correct, alternative) { // Verifica se a alternativa escolhida é a correta
         setStateAlternative(alternative)
         setDisable(true)
         if (filterQuestion().map((value) => value[correct]) == alternative) {
@@ -148,12 +154,17 @@ export default function Question({ navigation }) {
                 setNumberQuestion(numberQuestion + 1)
                 setColorComp("#FFF")
             }
-            setQtdQuestion(qtdQuestion + 1)
+            if (numberQuestion == 5) {
+                setDisable(true)
+                navigation.replace('End', {
+                    successes: successes
+                })
+            }
             setDisable(false)
         }, 2000)
     }
 
-    function randomQuestion() {
+    function randomQuestion() { // Função que embaralha as questões de acordo com o nível de dificuldade escolhido
         let questionDiffi = reQuestions.filter((values) => values.nivel == difficulty.toLowerCase())
         while (questionNew.length < 5) {
             let questionRandom = questionDiffi[Math.floor(Math.random() * questionDiffi.length)]
@@ -163,31 +174,19 @@ export default function Question({ navigation }) {
             }
         }
         filterQuestion()
-
     }
 
-    function filterQuestion() {
+    function filterQuestion() { // Função que escolhe o primeiro index do array
         return [questionNew[numberQuestion - 1]]
     }
 
 
-    useEffect(() => {
-        if (qtdQuestion == 0) {
-            setQtdQuestion(qtdQuestion - 1)
-            setDisable(true)
-            navigation.replace('End', {
-                successes: successes
-            })
-        }
-        if (qtdQuestion !== -5) {
-            setAlter()
-        }
-    }, [qtdQuestion])
+
 
     return (
         <View style={css.container}>
             {loanding ?
-                <View style={{ flex: 1, justifyContent: 'center', alignSelf: 'center' }}>
+                <View style={css.loading}>
                     < ActivityIndicator size={150} color="#00ff00" />
                 </View >
                 :

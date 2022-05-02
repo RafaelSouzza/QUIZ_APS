@@ -140,7 +140,7 @@ export default StyleSheet.create({
         height: '60%',
         width: '90%',
         marginTop: 30,
-        alignSelf:'center'
+        alignSelf: 'center'
     },
     titleTip: {
         fontSize: 24,
@@ -169,12 +169,17 @@ export default StyleSheet.create({
 
     //STYLES QUESTION
 
-    viewIcon:{
+    viewIcon: {
         flexDirection: 'row',
         margin: 3,
         marginRight: 5
     },
-    gradientQuestion:{
+    loading: {
+        flex: 1,
+        justifyContent: 'center',
+        alignSelf: 'center'
+    },
+    gradientQuestion: {
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between'
@@ -198,10 +203,10 @@ export default StyleSheet.create({
     image: {
         width: "80%",
         resizeMode: "stretch",
-        height: "30%",
+        height: "25%",
         alignSelf: 'center',
-        marginTop:5,
-        marginBottom:5
+        marginTop: 5,
+        marginBottom: 5
     },
     buttonAlternative: {
         backgroundColor: '#FFF',

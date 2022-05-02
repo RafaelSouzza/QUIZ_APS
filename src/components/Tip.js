@@ -36,9 +36,9 @@ export default function Tip({ navigation }) {
             text: 'Proin gravida pulvinar sapien, nec pulvinar ipsum eleifend eget. Phasellus ut elit magna. Praesent a eleifend neque. Pellentesque ac rhoncus nibh, et faucibus lorem. Donec tincidunt, sapien id euismod suscipit, leo lacus molestie turpis, sodales vestibulum erat elit quis felis. Cras quis quam tincidunt, laoreet turpis lobortis, molestie metus.',
             image: require('../assents/imageTip/tip5.png')
         }
-    ]
+    ] // Array com os títulos, texto e caminhos das imagens
 
-    function renderSlides({ item }) {
+    function renderSlides({ item }) { // Função que organiza cada tela com o cotéudo de cada index do array
         return (
             <View style={css.container}>
                 <Image source={item.image} style={css.imageTip} />
